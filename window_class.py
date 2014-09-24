@@ -60,7 +60,6 @@ class Window():
         while 1:
             line = ribfile.readline()
             tmpline = line.split('|')
-            #print tmpline
             if line:
                 try:
                     addr = IPAddress(tmpline[3]).bits()

@@ -342,7 +342,7 @@ def get_file():
             as_path_rib_location = hdname + asrib_fname  # .bz2/.gz            
             process_as_path_rib(clctr,as_path_ym,as_path_rib_location)
 
-            '''print 'determining table transfers start and end time for each peer...'
+            print 'determining table transfers start and end time for each peer...'
             for peer in peers:  # must process each peer one by one
                 peer = peer.rstrip()
                 print 'processing ',peer,'...'
@@ -362,7 +362,7 @@ def get_file():
                 del_tabletran_updates(peer, ym, cl_name)
 
             # delete all rubbish in the end
-            subprocess.call('rm '+hdname+'tmp/*', shell=True)'''
+            subprocess.call('rm '+hdname+'tmp/*', shell=True)
                                 
     return
 
