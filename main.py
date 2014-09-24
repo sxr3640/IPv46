@@ -15,9 +15,10 @@ for ym,as_ym in zip(yearmonth,yearmonth1):
             if os.path.isfile(line.replace('.txt.gz\n','.txt')):
                 continue
             else:
+                line = line. replace('\n','')
                 print line
-                #subprocess.call('gunzip -c '+line+' > \
-                #'+line.replace('txt.gz', 'txt'), shell=True)
-    #ana = Analyzer(filelist,as_ym,clctr, 45)
-    #ana.parse_update(ym)
+                subprocess.call('gunzip -c '+ line +' > \
+                '+line.replace('txt.gz', 'txt'),shell=True)
+    ana = Analyzer(filelist,as_ym,clctr, 45)
+    ana.parse_update(ym)
     #ana.plot_bgp_dynamic(ym)

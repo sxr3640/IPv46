@@ -41,55 +41,54 @@ class Analyzer():
             self.win6.start = 0
             self.win4.trie = patricia.trie(None)
             self.win6.trie = patricia.trie(None)
-            #self.win4.intial_as_path()
-            #self.win6.intial_as_path()
             filelist = open(self.filelist + clctr , 'r')
             for flist in filelist.readlines():
                 flist = flist.replace('\n', '')
                 print flist
-                subprocess.call('gunzip -c '+flist+' >\
-                '+flist.replace('txt.gz', 'txt'), shell=True)
                 self.win4.cut_trie()
                 self.win6.cut_trie()
                 f = open(flist.replace('txt.gz', 'txt'), 'r')
-                for line in f.readlines():
-                    try:
-                        line = line.replace('\n','')
-                        tmp = line.split('|')
-                        #statistics announcement and withdrawal
-                        IP_num = IP_num + 1
-                        #print IP_num
-                        if IP(tmp[3]).version() == 6:
-                            IPv6_num = IPv6_num + 1
-                            if tmp[2] =='A':
-                                A_num = A_num + 1
-                                A_IPv6_num = A_IPv6_num + 1
-                            elif tmp[2] == 'W':
-                                W_num = W_num + 1
-                                W_IPv6_num = W_IPv6_num + 1                       
-                        elif IP(tmp[3]).version() == 4:
-                            IPv4_num = IPv4_num + 1
-                            if tmp[2] =='A':
-                                A_num = A_num + 1
-                                A_IPv4_num = A_IPv4_num + 1
-                            elif tmp[2] == 'W':
-                                W_num = W_num + 1
-                                W_IPv4_num = W_IPv4_num + 1
+                #for line in f.readlines():
+                while 1:
+                    line = f.readline()
+                    if line:
+                        try:
+                            line = line.replace('\n','')
+                            tmp = line.split('|')
+                            #statistics announcement and withdrawal
+                            IP_num = IP_num + 1
+                            #print IP_num
+                            if IP(tmp[3]).version() == 6:
+                                IPv6_num = IPv6_num + 1
+                                if tmp[2] =='A':
+                                    A_num = A_num + 1
+                                    A_IPv6_num = A_IPv6_num + 1
+                                elif tmp[2] == 'W':
+                                    W_num = W_num + 1
+                                    W_IPv6_num = W_IPv6_num + 1                       
+                            elif IP(tmp[3]).version() == 4:
+                                IPv4_num = IPv4_num + 1
+                                if tmp[2] =='A':
+                                    A_num = A_num + 1
+                                    A_IPv4_num = A_IPv4_num + 1
+                                elif tmp[2] == 'W':
+                                    W_num = W_num + 1
+                                    W_IPv4_num = W_IPv4_num + 1
 
-                        #process update,analyzer every attribute 
-                        updt = Update(line.replace('\n',''))
-                        #print 'from_control1'
-                        from_control = updt.get_protocol()
-                        #print from_control
-                        if from_control == 4:
-                            self.win4.add(updt)
-                        elif from_control == 6:
-                            self.win6.add(updt)
-                    except:
-                        print line
-                        continue
+                            #process update,analyzer every attribute 
+                            updt = Update(line.replace('\n',''))
+                            #print 'from_control1'
+                            from_control = updt.get_protocol()
+                            #print from_control
+                            if from_control == 4:
+                                self.win4.add(updt)
+                            elif from_control == 6:
+                                self.win6.add(updt)
+                        except:
+                            print line
+                            continue
                 f.close()
-                os.remove(flist.replace('txt.gz', 'txt'))
+                #os.remove(flist.replace('txt.gz', 'txt'))
 
             filelist.close()
             del self.win4.as_path_trie
